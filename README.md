@@ -71,7 +71,7 @@ Summary of tasks achieved:
 
 </div>
 
-<img src="https://github.com/KACHAPPILLY2021/Stereo_vision/blob/main/output/Matches_screenshot_18.04.2022.png?raw=true" height="280" width="1000" alt="features">
+<img src="https://github.com/KACHAPPILLY2021/Stereo_vision/blob/main/output/Matches_screenshot_18.04.2022.png?raw=true" height="255" width="1000" alt="features">
 <div align="center">
 
 
@@ -89,7 +89,7 @@ Summary of tasks achieved:
 
 </div>
 
-<img src="https://github.com/KACHAPPILLY2021/Stereo_vision/blob/main/output/rectified.jpg?raw=true" height="280" width="1000" alt="rectified">
+<img src="https://github.com/KACHAPPILLY2021/Stereo_vision/blob/main/output/rectified.jpg?raw=true" height="255" width="1000" alt="rectified">
 <div align="center">
 
 
@@ -98,7 +98,7 @@ Summary of tasks achieved:
 
 </div>
 
-<img src="https://github.com/KACHAPPILLY2021/Stereo_vision/blob/main/output/depth_disparity.jpg?raw=true" height="280" width="1000" alt="map">
+<img src="https://github.com/KACHAPPILLY2021/Stereo_vision/blob/main/output/depth_disparity.jpg?raw=true" height="255" width="1000" alt="map">
 <div align="center">
 
 
