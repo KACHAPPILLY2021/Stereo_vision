@@ -23,20 +23,27 @@
       </ul>
     </li>
     <li>
-      <a href="#documentation">Documentation</a>
+      <a href="#pipeline">Pipeline</a>
       <ul>
-        <li><a href="#report">Report</a></li>
+        <li><a href="#calibration">Calibration</a></li>
+	<li><a href="#report">Rectification</a></li>
+	<li><a href="#correspondance">Correspondance</a></li>
+	<li><a href="#compute-depth-image">Compute Depth Image</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#report">Report</a>
+      <ul>
+        <li><a href="#dataset">Dataset</a></li>
       </ul>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#usage">Usage</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#contributors">Contributors</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#license">License</a></li>
   </ol>
@@ -49,14 +56,11 @@
 
 
 
-Implemented Depth First Search algorithm using Object Oriented Programming in C++ and visualized its output using Micromouse simulator.
+Implemented Stereo Vision on three datasets, each with two images of the same scenario from different camera angles. Analyzed relative object positions in both images to obtain 3D information. The process involves comparing the visual data from two vantage points, enabling the extraction of rich 3D information that can be used for various applications.
 
-Summary of tasks achieved:
-* Implemented DFS using a representation of the maze(mouse has no prior knowledge of walls except the boundaries.)
-* Generated path from current position to goal using the representation of the maze.
-* Moved the mouse using API interface commands and updated the walls as detected.
-* The robot halted when the mouse hit a wall, and DFS was employed to recalculate the path using prior wall data.
-* The described steps were repeated until the goal position was achieved.
+Found disparity and depth map of two image sequences of a given subject by leveraging the concepts of **Epipolar Geometry**, **Fundamental Matrix** (F), **Essential Matrix** (E) and its decomposition to get Rotation and Translation matrices, epipolar lines, rectification correspondence using SSD.
+
+ Note that ```no OpenCV inbuilt``` function was used while implementing these concepts .
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -107,23 +111,46 @@ Summary of tasks achieved:
 
 </div>
 
-<img src="https://github.com/KACHAPPILLY2021/Stereo_vision/blob/main/output/heatmap.jpg?raw=true" height="280" width="1000" alt="heat map">
+<img src="https://github.com/KACHAPPILLY2021/Stereo_vision/blob/main/output/heatmap.jpg?raw=true" height="255" width="1000" alt="heat map">
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+<!-- Pipeline -->
+## Pipeline
+
+### Calibration
+
+1) Compared the two images and selected the set of matching features. Tuned the Lowe's ration to reject the outliers
+2) Estimated the Fundamental matrix using the obtained matching feature and enforced rank 2. 
+3) Estimated the Essential matrix(E) from the Fundamental matrix(F) and instrinsic camera parameter.
+4) Decomposed the E into a translation T and rotation R.
+
+### Rectification
+
+1) Applied perspective transfomation to make sure that the epipolar lines are horizontal for both the images. This will limit the search space to horizontal line during the corrospondace matching process in the later stage.
+
+### Correspondance
+
+1) For each epipolar line, sliding window technique with SSD was applied to find the corrospondence and calulate disparity.
+2) Rescaled the disparity to be from 0-255 for visualization.
+
+### Compute Depth Image
+
+1) Using the disparity calculated above, the depth map was computed. The resultant image has a depth image instead of disparity.
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
-<!-- Document and Reports -->
-## Documentation
+<!-- Reports -->
+## Report
 
-The documentation for this project can be found here.
+The detailed report for this project can be found here. [Report](https://github.com/KACHAPPILLY2021/Stereo_vision/blob/main/ENPM_673_P3.pdf)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+### Dataset
 
+[MiddleBury Stereo Dataset](https://vision.middlebury.edu/stereo/data/scenes2021/#description)
 
-
-### Report
-
-Detailed decription for this project can be found in this [![Youtube](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/9MUCtm4vwkQ)
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -134,78 +161,26 @@ These are the instructions to get started on the project.
 To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
-* atleast C++17
+* Python 3.8.10
+* Libraries - OpenCV, Numpy, matplotlib
 * OS - Linux (tested)
 
 
-### Installation
+### Usage
 
-Installing the micromouse simulator and running the code.
-
-1. Make directory
+1. Clone the repo
    ```sh
-   mkdir ~/RWA2_simulator
+   git clone https://github.com/KACHAPPILLY2021/Stereo_vision.git
    ```
-2. Clone the repos
+2. Open the folder ```Stereo_vision``` in IDE and RUN each file or navigate using terminal
    ```sh
-   cd ∼ /RWA2_simulator
+   cd ∼ /Stereo_vision
    ```
+3. To run program which display outputs like shown above :
    ```sh
-   git clone https://github.com/mackorone/mms.git
-   ```
-   ```sh
-   git clone https://github.com/micromouseonline/mazefiles.git
-   ```
-   ```sh
-   git clone https://github.com/KACHAPPILLY2021/maze_solving_algorithm.git
-   ```
-3. Compile Simulator
-   ```sh
-   sudo apt-get install qt5-default
-   ```
-   ```sh
-   cd mms/src
-   ```
-   ```sh
-   qmake && make
+   python3 curule.py
    ```
 
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-How to start simulator and use this DFS code in it.
-1. Start simulator
-   ```sh
-   cd ∼ /RWA2_simulator/mms/bin
-   ```
-   ```sh
-   ./mms
-   ```
-2. Choose any maze type and Click on the + button as shown in figure.
-
-3. **Directory**: Click Browse and navigate to 'maze_solving_algorithm'
-4. Enter **Build command** as:
-   ```sh
-   g++ src/main.cpp src/mouse.cpp src/node.cpp src/api.cpp
-   ```
-5. Enter **Run Command** as :
-  ```sh
-  ./a.out
-  ```
-6. Then Press **Build**, followed by **RUN** under the **Controls** Section
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- CONTRIBUTORS -->
-## Contributors
-
-Here are the
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
